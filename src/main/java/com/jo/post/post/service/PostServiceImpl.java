@@ -88,4 +88,9 @@ public class PostServiceImpl implements PostService{
     public List<Post> findAllByGoalId(Long goalId) {
         return postRepository.findAllByGoalId(goalId);
     }
+
+    @Override
+    public Optional<Post> findByGoalIdAndCreated(Long goalId, LocalDate created) {
+        return Optional.ofNullable(postRepository.findByGoalIdAndCreated(goalId, created).get());
+    }
 }
