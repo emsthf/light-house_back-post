@@ -15,4 +15,5 @@ public interface PostService {
     void editPost(Long id, PostDto postDto);
     void delPost(Long id);
     List<Post> findAllByGoalId(Long goalId);
+    Optional<Post> findByGoalIdAndCreated(Long goalId, LocalDate created);
 }

@@ -4,6 +4,7 @@ import com.jo.post.post.model.Post;
 import com.jo.post.post.model.PostDto;
 import com.jo.post.post.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,6 +48,11 @@ public class PostController {
     @GetMapping("/post/auth/{goalId}")
     public List<Post> findAllByGoalId(@PathVariable Long goalId) {
         return postService.findAllByGoalId(goalId);
+    }
+
+    @GetMapping("/post/auth/find")
+    public Post findByGoalIdAndCreated(@RequestParam(value = "goalId") Long goalId, @RequestParam(value = "created") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate created) {
+        return postService.findByGoalIdAndCreated(goalId, created).get();
     }
 
 }
