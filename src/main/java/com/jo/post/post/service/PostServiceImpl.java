@@ -1,6 +1,5 @@
 package com.jo.post.post.service;
 
-import com.jo.post.category.service.CategoryService;
 import com.jo.post.post.model.Category;
 import com.jo.post.post.model.Post;
 import com.jo.post.post.model.PostDto;
@@ -21,7 +20,6 @@ import java.util.Optional;
 public class PostServiceImpl implements PostService{
 
     private final PostRepository postRepository;
-    private final CategoryService categoryService;
     private final PostImgService postImgService;
 
     Category saveCategory(Long categoryId) {
@@ -50,15 +48,6 @@ public class PostServiceImpl implements PostService{
                     .goalId(postDto.getGoalId())
                     .build());
             return post.getId();
-//            Post post = postRepository.save(Post.builder()
-//                    .title(postDto.getTitle())
-//                    .content(postDto.getContent())
-//                    .category(categoryService.getCategoryById(postDto.getCategoryId()).get())
-//                    .postImg(postDto.getPostImg())
-//                    .created(LocalDate.now())
-//                    .goalId(postDto.getGoalId())
-//                    .build());
-//            return post.getId();
         }
     }
 
