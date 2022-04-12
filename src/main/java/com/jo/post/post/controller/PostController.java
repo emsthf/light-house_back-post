@@ -55,4 +55,9 @@ public class PostController {
         return postService.findByGoalIdAndCreated(goalId, created).get();
     }
 
+    @DeleteMapping("/post/{goalId}/{userId}")
+    public void deleteAll(@PathVariable Long goalId, @PathVariable Long userId) {
+        postService.deleteAll(goalId, userId);
+    }
+
 }

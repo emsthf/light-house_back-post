@@ -16,4 +16,5 @@ public interface PostService {
     void delPost(Long id);
     List<Post> findAllByGoalId(Long goalId);
     Optional<Post> findByGoalIdAndCreated(Long goalId, LocalDate created);
+    void deleteAll(Long userId, Long GoalId);
 }

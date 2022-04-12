@@ -25,9 +25,10 @@ public class Post {
     private String postImg;
     private LocalDate created;
     private Long goalId;
+    private Long userId;
 
     @Builder
-    public Post(Long id, Category category, String title, String content, String postImg, LocalDate created, Long goalId) {
+    public Post(Long id, Category category, String title, String content, String postImg, LocalDate created, Long goalId, Long userId) {
         this.id = id;
         this.category = category;
         this.title = title;
@@ -35,5 +36,6 @@ public class Post {
         this.postImg = postImg;
         this.created = created;
         this.goalId = goalId;
+        this.userId = userId;
     }
 }

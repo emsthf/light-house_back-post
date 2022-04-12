@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface PostRepository extends JpaRepository<Post, Long> {
     Optional<Post> findByGoalIdAndCreated(Long goalId, LocalDate created);
     List<Post> findAllByGoalId(Long goalId);
+    List<Post> findAllByGoalIdAndUserId(Long goalId, Long userId);
 }

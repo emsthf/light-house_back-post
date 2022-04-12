@@ -37,7 +37,7 @@ public class PostServiceImpl implements PostService{
     public Long savePost(PostDto postDto) {
         log.info("add Post");
         if(postRepository.findByGoalIdAndCreated(postDto.getGoalId(), postDto.getCreated()).isPresent()) {
-            return null;
+            return null; // 해당 일에 이미 작성한 인증 글이 있는 경우
         } else {
             Post post = postRepository.save(Post.builder()
                     .title(postDto.getTitle())
@@ -46,6 +46,7 @@ public class PostServiceImpl implements PostService{
                     .postImg(postDto.getPostImg())
                     .created(LocalDate.now())
                     .goalId(postDto.getGoalId())
+                    .userId(postDto.getUserId())
                     .build());
             return post.getId();
         }
@@ -68,10 +69,11 @@ public class PostServiceImpl implements PostService{
     @Override
     public void editPost(Long id, PostDto postDto) {
         log.info("edit post {}.", postRepository.findById(postDto.getId()));
-        if(postRepository.findById(id).isPresent()){ //id 값이 있는지 확인부터 해보기
+        if(postRepository.findById(id).isPresent() // post가 존재하는지 확인
+        && postRepository.findById(id).get().getUserId() == postDto.getUserId()){ // post 작성자 확인
             Post post = Post.builder()
                     .id(postDto.getId())
-                    .category(saveCategory(postDto.getCategoryId()))
+//                    .category(saveCategory(postDto.getCategoryId()))
                     .title(postDto.getTitle())
                     .content(postDto.getContent())
                     .postImg(postDto.getPostImg())
@@ -101,5 +103,12 @@ public class PostServiceImpl implements PostService{
     @Override
     public Optional<Post> findByGoalIdAndCreated(Long goalId, LocalDate created) {
         return Optional.ofNullable(postRepository.findByGoalIdAndCreated(goalId, created).get());
+    }
+
+    @Override
+    public void deleteAll(Long goalId, Long userId) { // 작성한 목표 인증글 전체 삭제
+        postRepository.deleteAll(
+                postRepository.findAllByGoalIdAndUserId(goalId, userId)
+        );
     }
 }
