@@ -18,6 +18,18 @@ public class PostDto {
     private String postImg;
     private LocalDate created;
     private Long goalId;
+    private Long userId;
+
+    public PostDto(Long id, Long categoryId, String title, String content, String postImg, LocalDate created, Long goalId, Long userId) {
+        this.id = id;
+        this.categoryId = categoryId;
+        this.title = title;
+        this.content = content;
+        this.postImg = postImg;
+        this.created = created;
+        this.goalId = goalId;
+        this.userId = userId;
+    }
 
     public PostDto(Long id, Long categoryId, String title, String content, String postImg, LocalDate created, Long goalId) {
         this.id = id;
