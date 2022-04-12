@@ -1,7 +1,5 @@
 package com.jo.post.post.model;
 
-import com.jo.post.category.model.CategoryEntity;
-import com.jo.post.util.BaseTime;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,9 +14,8 @@ public class Post {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "categoryId")
-    private CategoryEntity category;
+    @Enumerated(EnumType.STRING) @Column(nullable = false)
+    private Category category;
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
@@ -27,9 +24,8 @@ public class Post {
     private LocalDate created;
     private Long goalId;
 
-
     @Builder
-    public Post(Long id, CategoryEntity category, String title, String content, String postImg, LocalDate created, Long goalId) {
+    public Post(Long id, Category category, String title, String content, String postImg, LocalDate created, Long goalId) {
         this.id = id;
         this.category = category;
         this.title = title;

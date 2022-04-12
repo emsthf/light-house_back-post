@@ -1,6 +1,6 @@
 package com.jo.post.post.service;
 
-import com.jo.post.category.service.CategoryService;
+import com.jo.post.post.model.Category;
 import com.jo.post.post.model.Post;
 import com.jo.post.post.model.PostDto;
 import com.jo.post.post.repository.PostRepository;
@@ -20,8 +20,17 @@ import java.util.Optional;
 public class PostServiceImpl implements PostService{
 
     private final PostRepository postRepository;
-    private final CategoryService categoryService;
     private final PostImgService postImgService;
+
+    Category saveCategory(Long categoryId) {
+        Category category = null;
+        if(categoryId == 1) { // 개인 목표 인증 카테고리
+            category = Category.GOAL;
+        } else if(categoryId == 2) { // 챌린지 인증 카테고리
+            category = Category.CHALLENGE;
+        }
+        return category;
+    }
 
     @Transactional
     @Override
@@ -33,7 +42,7 @@ public class PostServiceImpl implements PostService{
             Post post = postRepository.save(Post.builder()
                     .title(postDto.getTitle())
                     .content(postDto.getContent())
-                    .category(categoryService.getCategoryById(postDto.getCategoryId()).get())
+                    .category(saveCategory(postDto.getCategoryId()))
                     .postImg(postDto.getPostImg())
                     .created(LocalDate.now())
                     .goalId(postDto.getGoalId())
@@ -62,7 +71,7 @@ public class PostServiceImpl implements PostService{
         if(postRepository.findById(id).isPresent()){ //id 값이 있는지 확인부터 해보기
             Post post = Post.builder()
                     .id(postDto.getId())
-                    .category(categoryService.getCategoryById(postDto.getCategoryId()).get())
+                    .category(saveCategory(postDto.getCategoryId()))
                     .title(postDto.getTitle())
                     .content(postDto.getContent())
                     .postImg(postDto.getPostImg())
