@@ -16,10 +16,12 @@ public class PostImg {
     private Long id;
     @Column(columnDefinition = "TEXT")
     private String url;
+    private Long postId;
 
     @Builder
-    public PostImg(Long id, String url){
+    public PostImg(Long id, String url, Long postId){
         this.id = id;
         this.url = url;
+        this.postId = postId;
     }
 }

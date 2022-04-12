@@ -4,15 +4,16 @@ package com.jo.post.postImg;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
 
-@Controller
+@CrossOrigin
+@RestController
 @AllArgsConstructor
+@RequestMapping("/api")
 public class PostImgController {
 
     private S3Service s3Service;
@@ -25,7 +26,8 @@ public class PostImgController {
 
         model.addAttribute("postImgList", postImgDtoList);
 
-        return "/postImg";
+
+        return postImgDtoList.get(0).getImgFullPath();
     }
 
     @PostMapping("/postImg")

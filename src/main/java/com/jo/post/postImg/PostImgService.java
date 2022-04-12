@@ -31,11 +31,13 @@ public class PostImgService {
 
         return postImgDtoList;
     }
+
     private PostImgDto convertEntityToDto(PostImg postImg) {
         return PostImgDto.builder()
                 .id(postImg.getId())
                 .url(postImg.getUrl())
                 .imgFullPath("https://" + s3Service.CLOUD_FRONT_DOMAIN_NAME + "/" + postImg.getUrl()) //url 주소 변형 cloud front 주소로 변경할것
+                .postId(postImg.getPostId())
                 .build();
     }
 }
