@@ -14,12 +14,14 @@ public class Post {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Enumerated(EnumType.STRING) @Column(nullable = false)
     private Category category;
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
     private String content;
+    @Column(nullable = false)
     private String postImg;
     private LocalDate created;
     private Long goalId;

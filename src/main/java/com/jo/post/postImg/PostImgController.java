@@ -27,7 +27,7 @@ public class PostImgController {
         model.addAttribute("postImgList", postImgDtoList);
 
 
-        return postImgDtoList.get(0).getImgFullPath();
+        return postImgDtoList.get(postImgDtoList.size() - 1).getImgFullPath();
     }
 
     @PostMapping("/postImg")
