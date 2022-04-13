@@ -12,6 +12,7 @@ public interface PostService {
     Long savePost(PostDto postDto);
     List<Post> findAllPost();
     Optional<Post> findById(Long id);
+    int updateView(Long id);
     void editPost(Long id, PostDto postDto);
     void delPost(Long id);
     List<Post> findAllByGoalId(Long goalId);

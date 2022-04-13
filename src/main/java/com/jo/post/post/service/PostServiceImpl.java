@@ -7,6 +7,7 @@ import com.jo.post.post.repository.PostRepository;
 import com.jo.post.postImg.PostImgService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -65,7 +66,7 @@ public class PostServiceImpl implements PostService{
     @Transactional
     @Override
     public List<Post> findAllPost() {
-        return postRepository.findAll();
+        return postRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
     @Transactional
@@ -73,6 +74,12 @@ public class PostServiceImpl implements PostService{
     public Optional<Post> findById(Long id) {
         log.info("find by post id : {}", id);
         return Optional.ofNullable(postRepository.findById(id).get());
+    }
+
+    @Transactional
+    @Override
+    public int updateView(Long id) {
+        return postRepository.updateView(id);
     }
 
     @Transactional
@@ -90,8 +97,6 @@ public class PostServiceImpl implements PostService{
         } else {
             log.error("edit post error");
         }
-
-
 //        if(postRepository.findById(id).isPresent() // post가 존재하는지 확인
 //        && postRepository.findById(id).get().getUserId() == postDto.getUserId()){ // post 작성자 확인
 //            Post post = Post.builder()
