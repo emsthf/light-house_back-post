@@ -37,21 +37,30 @@ public class PostServiceImpl implements PostService{
     @Override
     public Long savePost(PostDto postDto) {
         log.info("add Post");
-        if(postRepository.findByGoalIdAndCreated(postDto.getGoalId(), postDto.getCreated()).isPresent()) {
-            return null; // 해당 일에 이미 작성한 인증 글이 있는 경우
-        } else {
-            Post post = postRepository.save(Post.builder()
-                    .title(postDto.getTitle())
-                    .content(postDto.getContent())
-                    .category(saveCategory(postDto.getCategoryId()))
-                    .postImg(postDto.getPostImg())
-                    .created(LocalDate.now())
-                    .view(postDto.getView())
-                    .goalId(postDto.getGoalId())
-                    .userId(postDto.getUserId())
-                    .build());
-            return post.getId();
-        }
+        Post post = postRepository.save(Post.builder()
+                .title(postDto.getTitle())
+                .content(postDto.getContent())
+                .category(saveCategory(postDto.getCategoryId()))
+                .postImg(postDto.getPostImg())
+                .created(LocalDate.now())
+                .goalId(postDto.getGoalId())
+                .userId(postDto.getUserId())
+                .build());
+        return post.getId();
+//        if(postRepository.findByGoalIdAndCreated(postDto.getGoalId(), postDto.getCreated()).isPresent()) {
+//            return null; // 해당 일에 이미 작성한 인증 글이 있는 경우
+//        } else {
+//            Post post = postRepository.save(Post.builder()
+//                    .title(postDto.getTitle())
+//                    .content(postDto.getContent())
+//                    .category(saveCategory(postDto.getCategoryId()))
+//                    .postImg(postDto.getPostImg())
+//                    .created(LocalDate.now())
+//                    .goalId(postDto.getGoalId())
+//                    .userId(postDto.getUserId())
+//                    .build());
+//            return post.getId();
+//        }
     }
 
     @Transactional
@@ -76,21 +85,31 @@ public class PostServiceImpl implements PostService{
     @Transactional
     @Override
     public void editPost(Long id, PostDto postDto) {
-        log.info("edit post {}.", postRepository.findById(postDto.getId()));
-        if(postRepository.findById(id).isPresent() // post가 존재하는지 확인
-        && postRepository.findById(id).get().getUserId() == postDto.getUserId()){ // post 작성자 확인
-            Post post = Post.builder()
-                    .id(postDto.getId())
-//                    .category(saveCategory(postDto.getCategoryId()))
-                    .title(postDto.getTitle())
-                    .content(postDto.getContent())
-                    .view(postDto.getView())
-                    .postImg(postDto.getPostImg())
-                    .build();
-            postRepository.save(post);
-        }else {
-            log.error("edit post error.");
+        log.info("edit post {}.", postRepository.findById(id));
+        Post existPost = postRepository.findByGoalIdAndCreated(id, postDto.getCreated()).get();
+        LocalDate now = LocalDate.now();
+        if(existPost.getId().equals(id) && postDto.getCreated().isEqual(now)) {
+            log.info("exists post id : {}", existPost.getId());
+            existPost.setTitle(postDto.getTitle());
+            existPost.setContent(postDto.getContent());
+            existPost.setPostImg(postDto.getPostImg());
+            postRepository.save(existPost);
+        } else {
+            log.error("edit post error");
         }
+//        if(postRepository.findById(id).isPresent() // post가 존재하는지 확인
+//        && postRepository.findById(id).get().getUserId() == postDto.getUserId()){ // post 작성자 확인
+//            Post post = Post.builder()
+//                    .id(postDto.getId())
+////                    .category(saveCategory(postDto.getCategoryId()))
+//                    .title(postDto.getTitle())
+//                    .content(postDto.getContent())
+//                    .postImg(postDto.getPostImg())
+//                    .build();
+//            postRepository.save(post);
+//        }else {
+//            log.error("edit post error.");
+//        }
     }
 
     @Transactional
