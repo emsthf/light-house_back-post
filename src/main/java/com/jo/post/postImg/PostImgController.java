@@ -26,7 +26,6 @@ public class PostImgController {
 
         model.addAttribute("postImgList", postImgDtoList);
 
-
         return postImgDtoList.get(postImgDtoList.size() - 1).getImgFullPath();
     }
 

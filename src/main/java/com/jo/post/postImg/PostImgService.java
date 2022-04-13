@@ -33,6 +33,7 @@ public class PostImgService {
     }
 
     private PostImgDto convertEntityToDto(PostImg postImg) {
+        log.info("convert img");
         return PostImgDto.builder()
                 .id(postImg.getId())
                 .url(postImg.getUrl())
