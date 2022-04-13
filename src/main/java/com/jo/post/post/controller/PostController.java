@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -36,8 +37,11 @@ public class PostController {
     }
 
     @GetMapping("/post/{id}")
-    public Post findById(@PathVariable Long id) {
-        return postService.findById(id).get();
+    public Post findById(@PathVariable Long id, Model model) {
+        Post post = postService.findById(id).get();
+        postService.updateView(id); // view ++
+        model.addAttribute("post", post);
+        return post;
     }
 
     @DeleteMapping("/post/{id}")

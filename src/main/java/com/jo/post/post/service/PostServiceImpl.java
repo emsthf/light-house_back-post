@@ -7,6 +7,7 @@ import com.jo.post.post.repository.PostRepository;
 import com.jo.post.postImg.PostImgService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -45,6 +46,7 @@ public class PostServiceImpl implements PostService{
                     .category(saveCategory(postDto.getCategoryId()))
                     .postImg(postDto.getPostImg())
                     .created(LocalDate.now())
+                    .view(postDto.getView())
                     .goalId(postDto.getGoalId())
                     .userId(postDto.getUserId())
                     .build());
@@ -55,7 +57,7 @@ public class PostServiceImpl implements PostService{
     @Transactional
     @Override
     public List<Post> findAllPost() {
-        return postRepository.findAll();
+        return postRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
     @Transactional
@@ -63,6 +65,12 @@ public class PostServiceImpl implements PostService{
     public Optional<Post> findById(Long id) {
         log.info("find by post id : {}", id);
         return Optional.ofNullable(postRepository.findById(id).get());
+    }
+
+    @Transactional
+    @Override
+    public int updateView(Long id) {
+        return postRepository.updateView(id);
     }
 
     @Transactional
@@ -76,6 +84,7 @@ public class PostServiceImpl implements PostService{
 //                    .category(saveCategory(postDto.getCategoryId()))
                     .title(postDto.getTitle())
                     .content(postDto.getContent())
+                    .view(postDto.getView())
                     .postImg(postDto.getPostImg())
                     .build();
             postRepository.save(post);

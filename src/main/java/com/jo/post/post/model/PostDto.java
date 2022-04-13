@@ -15,16 +15,18 @@ public class PostDto {
     private Long categoryId;
     private String title;
     private String content;
+    private int view;
     private String postImg;
     private LocalDate created;
     private Long goalId;
     private Long userId;
 
-    public PostDto(Long id, Long categoryId, String title, String content, String postImg, LocalDate created, Long goalId, Long userId) {
+    public PostDto(Long id, Long categoryId, String title, String content, int view, String postImg, LocalDate created, Long goalId, Long userId) {
         this.id = id;
         this.categoryId = categoryId;
         this.title = title;
         this.content = content;
+        this.view = view;
         this.postImg = postImg;
         this.created = created;
         this.goalId = goalId;
