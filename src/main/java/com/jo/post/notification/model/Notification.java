@@ -7,12 +7,13 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper=false) //???시스템에서 추가하라고함
 @Entity
-public class Notification extends BaseTime {
+public class Notification {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,12 +21,14 @@ public class Notification extends BaseTime {
     private String title;
     private String content;
     private String notifImg;
+    private LocalDate created;
 
     @Builder
-    public Notification(Long id, String title, String content, String notifImg) {
+    public Notification(Long id, String title, String content, String notifImg, LocalDate created) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.notifImg = notifImg;
+        this.created = created;
     }
 }
