@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +29,7 @@ public class NotificationServiceImpl implements NotificationService{
                 .title(noticeDto.getTitle())
                 .content(noticeDto.getContent())
                 .notifImg(noticeDto.getNotifImg())
+                .created(LocalDate.now())
                 .build());
     }
 
@@ -56,6 +58,7 @@ public class NotificationServiceImpl implements NotificationService{
                     .title(noticeDto.getTitle())
                     .content(noticeDto.getContent())
                     .notifImg(noticeDto.getNotifImg())
+                    .created(LocalDate.now())
                     .build();
             noticeRepository.save(notification);
         }else {

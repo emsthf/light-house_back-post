@@ -36,6 +36,6 @@ public class PostImgController {
 
         postImgService.savePost(postImgDto);
 
-        return "redirect:/postImg";
+        return "https://" + s3Service.CLOUD_FRONT_DOMAIN_NAME + "/" + postImgDto.getUrl();
     }
 }
