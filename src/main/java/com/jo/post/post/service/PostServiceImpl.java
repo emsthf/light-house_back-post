@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Slf4j
@@ -86,12 +87,14 @@ public class PostServiceImpl implements PostService{
     @Transactional
     @Override
     public void editPost(Long id, PostDto postDto) {
+        log.info("date : {}", LocalDate.now());
         log.info("edit post {}.", postRepository.findById(id).get().getTitle());
         Post existPost = postRepository.findByGoalIdAndCreated(id, postDto.getCreated()).get();
         LocalDate now = LocalDate.now();
 
         try {
             if(existPost.getId().equals(id) && postDto.getCreated().isEqual(now)) {
+                log.info("date : {}", now);
                 log.info("exists post id : {}", existPost.getId());
                 existPost.setTitle(postDto.getTitle());
                 existPost.setContent(postDto.getContent());
@@ -131,6 +134,16 @@ public class PostServiceImpl implements PostService{
     @Override
     public List<Post> findAllByGoalId(Long goalId) {
         return postRepository.findAllByGoalId(goalId);
+    }
+
+    @Override
+    public List<Post> findByUserIdOrderByIdDesc(Long userId) {
+        return postRepository.findByUserIdOrderByIdDesc(userId);
+    }
+
+    @Override
+    public List<Post> findAllByUserId(Long userId) {
+        return postRepository.findAllByUserId(userId);
     }
 
     @Override

@@ -10,7 +10,7 @@ public interface GoalClient {
     @GetMapping("/api/goal/{id}")
     GoalDto getGoalById(@PathVariable("id") Long id);
 
-    @GetMapping("/api/doing/{id}")
-    DoingDto
+//    @GetMapping("/api/doing/{id}")
+//    DoingDto
 
 }

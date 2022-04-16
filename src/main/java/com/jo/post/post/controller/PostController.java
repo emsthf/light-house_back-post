@@ -54,6 +54,16 @@ public class PostController {
         return postService.findAllByGoalId(goalId);
     }
 
+//    @GetMapping("/post/list/{userId}")
+//    public List<Post> findAllByUserId(@PathVariable Long userId) {
+//        return postService.findAllByUserId(userId);
+//    }
+
+    @GetMapping("/post/list/{userId}")
+    public List<Post> findAllByUserId(@PathVariable Long userId) {
+        return postService.findByUserIdOrderByIdDesc(userId);
+    }
+
     @GetMapping("/post/auth/find")
     public Post findByGoalIdAndCreated(@RequestParam(value = "goalId") Long goalId, @RequestParam(value = "created") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate created) {
         return postService.findByGoalIdAndCreated(goalId, created).get();
