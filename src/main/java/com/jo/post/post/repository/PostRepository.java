@@ -12,10 +12,11 @@ import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
     Optional<Post> findByGoalIdAndCreated(Long goalId, LocalDate created);
-    List<Post> findAllByGoalId(Long goalId);
-    List<Post> findAllByGoalIdAndUserId(Long goalId, Long userId);
-    List<Post> findAllByUserId(Long userId);
+//    List<Post> findAllByGoalId(Long goalId);
+    List<Post> findByGoalIdOrderByIdDesc(Long goalId);
+//    List<Post> findAllByUserId(Long userId);
     List<Post> findByUserIdOrderByIdDesc(Long userId);
+    List<Post> findAllByGoalIdAndUserId(Long goalId, Long userId);
 
     @Modifying
     @Query("update Post p set p.view = p.view + 1 where p.id = :id")

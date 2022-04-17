@@ -54,14 +54,9 @@ public class PostController {
         return postService.findAllByGoalId(goalId);
     }
 
-//    @GetMapping("/post/list/{userId}")
-//    public List<Post> findAllByUserId(@PathVariable Long userId) {
-//        return postService.findAllByUserId(userId);
-//    }
-
     @GetMapping("/post/list/{userId}")
     public List<Post> findAllByUserId(@PathVariable Long userId) {
-        return postService.findByUserIdOrderByIdDesc(userId);
+        return postService.findAllByUserId(userId);
     }
 
     @GetMapping("/post/auth/find")
