@@ -23,7 +23,7 @@ public class Post {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false, length=2000)
+    @Column(nullable = false, length = 2000)
     private String content;
 
     @Column(columnDefinition = "integer default 0", nullable = false)
