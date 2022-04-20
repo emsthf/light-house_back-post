@@ -54,5 +54,5 @@ tasks.named('test') {
 }
 
 bootWar {
-	archiveFileName = 'application.war'
+	archiveFileName = 'post-application.war'
 }
