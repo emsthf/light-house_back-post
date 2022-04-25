@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "goalClient", url = "http://localhost:8080")
+@FeignClient(name = "goalClient", url = "http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/")
 public interface GoalClient {
     @GetMapping("/api/goal/{id}")
     GoalDto getGoalById(@PathVariable("id") Long id);

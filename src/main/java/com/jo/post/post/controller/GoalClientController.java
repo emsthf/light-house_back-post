@@ -12,15 +12,17 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@CrossOrigin("*")
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class GoalClientController {
     private final GoalClient goalClient;
     private final PostService postService;
 
     @PostMapping("/feign/{goalId}")
-    public String findGoalInPost(@PathVariable("goalId") Long goalId, @RequestBody PostDto postDto) {
+    public Long findGoalInPost(@PathVariable("goalId") Long goalId, @RequestBody PostDto postDto) {
         System.out.println("### feign client : Goal 시작 ###");
         GoalDto goal = goalClient.getGoalById(goalId); // 외부 API 호출
         System.out.println("Feign을 이용한 goal 호출 결과 : " + goal.toString());
@@ -40,11 +42,10 @@ public class GoalClientController {
         List<DoingDto> doings = goalClient.findAllByWeekAndGoalId(weekInProgress, goalId);
         System.out.println("Feign을 이용한 doing 호출 결과 : " + doings.toString());
         if(doings.size() < goal.getWeekCount()) {
-            postService.savePost(postDto);
             log.info("한 주의 doing 갯수가 weekcount 이하 일 때, 포스트 등록");
-            return "save success!!";
+            return postService.savePost(postDto);
         } else {
-            return "save fail...";
+            return null;
         }
     }
 

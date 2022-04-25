@@ -7,6 +7,7 @@ import com.jo.post.post.repository.PostRepository;
 import com.jo.post.postImg.PostImgService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -65,7 +66,7 @@ public class PostServiceImpl implements PostService{
     @Transactional
     @Override
     public List<Post> findAllPost() {
-        return postRepository.findAll();
+        return postRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
     @Transactional
